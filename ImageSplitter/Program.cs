@@ -29,7 +29,6 @@ namespace ImageSplitter
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             var baseName = Path.GetFileNameWithoutExtension(imageLocation);
-            Console.WriteLine(baseName);
             for (int i = 0; i < totalImages; i++)
             {
                 var remainingWidth = width;
