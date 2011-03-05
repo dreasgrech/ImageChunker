@@ -16,6 +16,7 @@ namespace ImageChunker
 
             var chunker = new Chunker(imageLocation, settings.Width, settings.Height);
             chunker.SplitAndSave();
+
         }
 
         static Settings HandleArgs(IEnumerable<string> args)
