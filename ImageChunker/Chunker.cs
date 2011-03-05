@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.IO;
 
 namespace ImageChunker
@@ -48,7 +45,7 @@ namespace ImageChunker
         }
 
         /// <summary>
-        /// Splits and saves the images to a specified location
+        /// Splits the image and saves the chunks to a specified location
         /// </summary>
         /// <param name="imageLocation">Where do you want to save your chunks?</param>
         public void SplitAndSave(string imageLocation)

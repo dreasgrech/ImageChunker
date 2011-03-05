@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.IO;
+﻿using System.Collections.Generic;
 using NDesk.Options;
 
 namespace ImageChunker
@@ -11,15 +7,14 @@ namespace ImageChunker
     {
         static void Main(string[] args)
         {
-            var settings = HandleArgs(args);
+            var settings = GetCommandLineArgs(args);
             string imageLocation = settings.Image;
 
             var chunker = new Chunker(imageLocation, settings.Width, settings.Height);
             chunker.SplitAndSave();
-
         }
 
-        static Settings HandleArgs(IEnumerable<string> args)
+        static Settings GetCommandLineArgs(IEnumerable<string> args)
         {
             int width = 0, height = 0;
             string image = "", output = "";
