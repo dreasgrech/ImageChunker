@@ -13,6 +13,12 @@ namespace ImageChunker
 
         private readonly Image image;
 
+        /// <summary>
+        /// Initializes the image chunker
+        /// </summary>
+        /// <param name="image">The image you want chunked!</param>
+        /// <param name="cropWidth">The full width of a chunk</param>
+        /// <param name="cropHeight">The full height of a chunk (NOTE: THIS IS NOT YET USED!)</param>
         public Chunker(Image image, int cropWidth, int cropHeight)
         {
             this.image = image;
@@ -22,6 +28,10 @@ namespace ImageChunker
             TotalImages = (int)Math.Ceiling((double)image.Width / CropWidth);
         }
 
+        /// <summary>
+        /// Splits and saves the images to a location
+        /// </summary>
+        /// <param name="imageLocation">Where do you want to save your chunks?</param>
         public void SplitAndSave(string imageLocation)
         {
             var bmp = new Bitmap(CropWidth, image.Height);
