@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
 
-namespace ImageSplitter
+namespace ImageChunker
 {
     class Program
     {
@@ -16,10 +12,11 @@ namespace ImageSplitter
             string imageLocation = args[0];
             int width = Convert.ToInt32(args[1]);
             Image image = Image.FromFile(imageLocation,true);
-            if (width > image.Width)
+            if (width >= image.Width)
             {
                 return;
             }
+
             var totalImages = (int)Math.Ceiling((double)image.Width/width);
 
             var bmp = new Bitmap(width, image.Height);
@@ -39,7 +36,7 @@ namespace ImageSplitter
                 }
                 g.Clear(Color.Transparent);
                 g.DrawImage(image, new Rectangle(0, 0, remainingWidth, image.Height), new Rectangle(i * width, 0, remainingWidth, image.Height), GraphicsUnit.Pixel);
-                bmp.Save(String.Format("{0}{1}.png",baseName, i));
+                bmp.Save(String.Format("{0}{1}{2}",baseName, i, Path.GetExtension(imageLocation)));
             }
         }
     }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ImageSplitter")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ImageChunker")]
+[assembly: AssemblyDescription("An image splitter")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ImageSplitter")]
+[assembly: AssemblyCompany("Andreas Grech")]
+[assembly: AssemblyProduct("ImageChunker")]
 [assembly: AssemblyCopyright("Copyright ©  2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
