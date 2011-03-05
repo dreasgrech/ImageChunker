@@ -12,16 +12,23 @@ namespace ImageChunker
         public int CropHeight { get; set; }
 
         private readonly Image image;
+        private string imagePath;
 
         /// <summary>
         /// Initializes the image chunker
         /// </summary>
-        /// <param name="image">The image you want chunked!</param>
+        /// <param name="imagePath">The image you want chunked!</param>
         /// <param name="cropWidth">The full width of a chunk</param>
         /// <param name="cropHeight">The full height of a chunk (NOTE: THIS IS NOT YET USED!)</param>
-        public Chunker(Image image, int cropWidth, int cropHeight)
+        public Chunker(string imagePath, int cropWidth, int cropHeight)
         {
-            this.image = image;
+            this.imagePath = imagePath;
+            image = Image.FromFile(imagePath, true);
+            if (cropWidth >= image.Width)
+            {
+                throw new Exception("Your specified width is >= than the total width of your image! Wtf?");
+            }
+
             CropWidth = cropWidth;
             CropHeight = cropHeight;
 
@@ -29,7 +36,7 @@ namespace ImageChunker
         }
 
         /// <summary>
-        /// Splits and saves the images to a location
+        /// Splits and saves the images to a specified location
         /// </summary>
         /// <param name="imageLocation">Where do you want to save your chunks?</param>
         public void SplitAndSave(string imageLocation)
@@ -37,7 +44,8 @@ namespace ImageChunker
             var bmp = new Bitmap(CropWidth, image.Height);
             Graphics g = GetGraphicsFromImage(bmp);
 
-            var baseName = Path.GetFileNameWithoutExtension(imageLocation);
+            string baseName = Path.GetFileNameWithoutExtension(imagePath), extension = Path.GetExtension(imagePath);
+
             for (int i = 0; i < TotalImages; i++)
             {
                 var remainingWidth = CropWidth;
@@ -46,10 +54,24 @@ namespace ImageChunker
                     remainingWidth = image.Width - (CropWidth * (i));
                     g = GetGraphicsFromImage(new Bitmap(remainingWidth, image.Height));
                 }
+
                 g.Clear(Color.Transparent);
                 g.DrawImage(image, new Rectangle(0, 0, remainingWidth, image.Height), new Rectangle(i * CropWidth, 0, remainingWidth, image.Height), GraphicsUnit.Pixel);
-                bmp.Save(String.Format("{0}{1}{2}", baseName, i, Path.GetExtension(imageLocation)));
+                bmp.Save(GetChunkLocation(imageLocation,baseName,i,extension));
             }
+        }
+
+        /// <summary>
+        /// Splits the image and saves the chunks to the current directory
+        /// </summary>
+        public void SplitAndSave()
+        {
+            SplitAndSave("");
+        }
+
+        private static string GetChunkLocation(string imageLocation, string baseName, int chunkIndex, string extension)
+        {
+            return String.Format("{0}{1}{2}{3}", imageLocation, baseName, chunkIndex, extension);
         }
 
         private static Graphics GetGraphicsFromImage(Bitmap bmp)

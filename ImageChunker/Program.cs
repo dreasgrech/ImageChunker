@@ -7,18 +7,15 @@ namespace ImageChunker
 {
     class Program
     {
+        //TODO: Command Line Args
+
         static void Main(string[] args)
         {
             string imageLocation = args[0];
             int width = Convert.ToInt32(args[1]);
-            Image image = Image.FromFile(imageLocation,true);
-            if (width >= image.Width)
-            {
-                throw new Exception("Your specified width is >= than the total width of your image! Wtf?");
-            }
 
-            var chunker = new Chunker(image, width, 100);
-            chunker.SplitAndSave(imageLocation);
+            var chunker = new Chunker(imageLocation, width, 100);
+            chunker.SplitAndSave();
         }
     }
 }
